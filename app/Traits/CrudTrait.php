@@ -52,6 +52,9 @@ trait CrudTrait
     //many to many
     private $manyToMany;
 
+    //many to many
+    private $nameFolder = 'File';
+
     // validation rule harus pkai object
     // tentukan jumlah col-sm boostrap
     // ooption object label
@@ -179,8 +182,6 @@ trait CrudTrait
      */
     public function store(Request $request)
     {
-        // return $request->userAgent();
-
         //get dari post form
         $getRequest = $this->getRequest($request);
         // return $this->configForm();
@@ -201,6 +202,7 @@ trait CrudTrait
             $manyToMany  = null;
             $manyRelation  = null;
             $valueMany  = null;
+            // return $relation;
             foreach ($relation as $key => $value) {
                 try { //
                     $relationModels = '\\App\Models\\' . ucfirst($key);
@@ -214,16 +216,32 @@ trait CrudTrait
                             $valueMany[$manyToMany] = $val;
                             break;
                         }
+                        if (str_contains($colom, "isFile")) {
+                            $colomReplace = str_replace(' isFile', '', $colom);
+                            if (isset($colomReplace)) {
+                                $file =  $request->file($colomReplace);
+                                $nameFile = uniqid($key . '_') . '.' . $file->getClientOriginalExtension();
+                                $file->move(
+                                    base_path() . '/public/storage/' . $this->nameFolder . '/',
+                                    $nameFile
+                                );
+                                $relationModels->$colomReplace = $nameFile;
+                            }
+                            break;
+                        }
                         $relationModels->$colom = $val;
                     }
                     $relationModels->save();
                     if (isset($manyToMany)) {
                         $relationModels->$manyToMany()->attach($valueMany);
+                    } else {
+                        $relationsFields = $key . '_id';
+                        $data->$relationsFields = $relationModels->id;
                     }
-                    $relationsFields = $key . '_id';
-
-                    $data->$relationsFields = $relationModels->id;
-                } catch (\Throwable $th) { }
+                } catch (\Throwable $th) {
+                    // return redirect()->route($this->route . '.index')->with('message', ucwords(str_replace('-', ' ', $this->route)) . ' Ada yang salah')->with('Class', 'error');
+                    return $th;
+                }
             }
             // return $extraFrom;
         }
@@ -238,6 +256,9 @@ trait CrudTrait
             }
             if ($index === "password") {
                 $item = bcrypt($item);
+            }
+            if (is_array($index)) {
+                return $index;
             }
             $data->$index = $item;
         }
@@ -469,20 +490,23 @@ trait CrudTrait
      */
     public function getRequest($request, $id = null, $relationId = null)
     {
+        // return $request;
+        $icon = $request->file('icon');
+
         $messages = [
             'required' => 'tidak boleh kosong',
             'unique' => 'tidak boleh sama',
             'min' => 'harus minimal :min',
             'max' => 'harus makasimal :max',
+            'mimes' => 'File harus :values',
         ];
 
         $validation = [];
         $form = [];
         $relation = [];
 
-
+        // return $this->configForm();
         foreach ($this->configForm() as $index =>  $value) {
-            if (isset($value['extraForm'])) { }
 
             if (isset($value['validasi'])) {
                 $validasi = $value['validasi'];
@@ -528,11 +552,21 @@ trait CrudTrait
             }
 
             if (!isset($value['extraForm'])) {
+                // if (isset($value['input']) == "img") {
+                //     $form[$value['name']] = $request->input($value['name']) . " apa ";
+                // } else {
+                // }
                 $form[$value['name']] = $request->input($value['name']);
             } else {
                 foreach ($this->extraFrom as $realtion) {
                     if ($realtion == $value['extraForm']) {
-                        $relation[$realtion][$value['name']] = $request->input($value['name']);
+                        if (isset($value['input']) && $value['input'] == "img") {
+                            $reqFile = $value['name'];
+                            $file = $request->file($reqFile);
+                            $relation[$realtion][$value['name'] . " isFile"] = $file;
+                        } else {
+                            $relation[$realtion][$value['name']] = $request->input($value['name']);
+                        }
                     }
                 }
             }

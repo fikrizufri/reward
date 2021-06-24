@@ -16,7 +16,7 @@
           <div class="icon">
             <i class="fa fa-microphone"></i>
           </div>
-          <a href="{{route('rapat.index')}}" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+          <a href="#" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
@@ -31,7 +31,7 @@
           <div class="icon">
             <i class="fa fa-user-circle"></i>
           </div>
-          <a href=" {{route('anggota.index')}}" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+          <a href="#" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
@@ -46,7 +46,7 @@
           <div class="icon">
             <i class="fa fa-users"></i>
           </div>
-          <a href="{{route('pegawai.index')}}" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+          <a href="#" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
@@ -61,18 +61,12 @@
           <div class="icon">
             <i class="ion ion-pie-graph"></i>
           </div>
-          <a href="{{route('jenis-rapat.index')}}" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
+          <a href="#" class="small-box-footer">Selengkapnya <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
       <!-- ./col -->
     </div>
     <div class="row">
-      <div class="col-lg-12 col-12 text-center mt-4">
-        <img src="{{'template/dist/img/logo.png'}}" width="30%">
-      </div>
-      <div class="col-lg-12 col-12 text-center">
-        <h2 class="text-center"> <b>E-Risalah <br> DPRD Kota Samarinda </b></h2>
-      </div> 
 
     </div>
     <!-- /.row -->

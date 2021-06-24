@@ -44,11 +44,13 @@
               <tr>
                 <th width="5%">No</th>
                 @foreach ($configHeaders as $key => $header)
-                @if (isset($header['alias']))
-                <th>{{ucfirst($header['alias'])}}</th>
-                @else
-                <th>{{ucfirst($header['name'])}}</th>
-                @endif
+                <th @if(isset($header['class'])) class="{{$header['class']}}" @endif>
+                  @if (isset($header['alias']))
+                  {{ucfirst($header['alias'])}}
+                  @else
+                  {{ucfirst($header['name'])}}
+                  @endif
+                </th>
                 @endforeach
                 <th class="text-center">Aksi</th>
               </tr>
@@ -57,9 +59,11 @@
               @forelse ($data as $index => $item)
 
               <tr>
-                <td>{{ $index+1+(($data->CurrentPage()-1)*$data->PerPage()) }}</td>
+                <td class="text-center">{{ $index+1+(($data->CurrentPage()-1)*$data->PerPage()) }}</td>
                 @foreach ($configHeaders as $key => $header)
-                <td>{{ucfirst($item[$header['name']])}}</td>
+                <td @if(isset($header['class'])) class="{{$header['class']}}" @endif>
+                  {!!ucfirst($item[$header['name']])!!}
+                </td>
                 @endforeach
                 <td class="text-center">
                   @if(isset($button))

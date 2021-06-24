@@ -72,6 +72,12 @@ trait HasPermissionsTrait
     {
         return $this->belongsToMany(Permission::class, 'users_permissions');
     }
+
+    public function customer()
+    {
+        return $this->hasOne(Customer::class);
+    }
+
     protected function hasPermission($permission)
     {
 

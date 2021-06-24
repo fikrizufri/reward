@@ -7,7 +7,7 @@
   <title>Admin | Log in</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <link rel="icon" type="image/png" href="{{asset('template/dist/img/logo.png')}}" />
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{asset('template/plugins/fontawesome-free/css/all.min.css')}}">
   <!-- Ionicons -->
@@ -44,7 +44,7 @@
   <div class="login-box">
     <div class="login-logo">
       <img src="{{'template/dist/img/logo.png'}}" width="70%">
-      <h2 class="text-white"><b>E-Risalah <br> DPRD Kota Samarinda </b></h2>
+      <h2 class="text-white"><b>Rewards Sistem<br> </b></h2>
 
     </div>
     <!-- /.login-logo -->
@@ -66,7 +66,7 @@
             </div>
             @error('username')
             <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
+              <strong>Username dan password anda salah</strong>
             </span>
             @enderror
           </div>

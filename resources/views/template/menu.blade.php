@@ -29,7 +29,14 @@
             </p>
           </a>
         </li>
-
+        @can('view-customer')
+        <li class="nav-item">
+          <a href="{{route('customer.index')}}" class="nav-link {{ Request::segment(1) === 'customer' ? 'active' : '' }}">
+            <i class="fa fa-users nav-icon"></i>
+            <p>Pelangan</p>
+          </a>
+        </li>
+        @endcan
         @can('view-user')
 
         <li class="nav-item has-treeview {{ Request::segment(1) === 'user' ? 'menu-open' : '' }} {{ Request::segment(1) === 'role' ? 'menu-open' : '' }} {{ Request::segment(1) === 'task' ? 'menu-open' : '' }}">

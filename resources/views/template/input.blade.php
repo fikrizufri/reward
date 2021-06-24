@@ -50,6 +50,22 @@
     </div>
     @endif
 
+    @if($item['input'] == 'img' || $item['input'] == 'file')
+    <div>
+        {{old($item['name'])}}
+        <input type="file" name="{{$item['name']}}" id="{{$item['name']}}" required class="form-control" @if($store=="update" ) value="{{$data[$item['name']]}}" @else value="{{old($item['name'])}}" @endif>
+    </div>
+    @if($item['input'] == 'img' )
+    <div class="preview"></div>
+    @endif
+    @endif
+
+    @if($item['input'] == 'textarea')
+    <textarea name="{{$item['name']}}" id="{{$item['name']}}" @if($item['row']) {{$item['row']}} @endif x-webkit-speech placeholder="Speak" class="form-control overflow-auto">@if($store=="update" ){!!$data[$item['name']]!!} @else {!!old($item['name'])!!}@endif
+    </textarea>
+
+    @endif
+
     @if($item['input'] == 'text' || $item['input'] == 'number' || $item['input'] == 'date'|| $item['input'] == 'email' || $item['input'] == 'password' || $item['input'] == 'time')
     <div>
         <input type="{{$item['input']}}" name="{{$item['name']}}" id="{{$item['name']}}" @if($item['input']=='password' ) autocomplete="on" @else placeholder="{{$item['alias']}}" @endif class="form-control {{$errors->has($item['name']) ? 'is-invalid' : ''}}" @if($store=="update" ) value="{{$data[$item['name']]}}" @else value="{{old($item['name'])}}" @endif>
@@ -90,6 +106,29 @@
         $("#text{{$item['name']}}").html("");
     });
 
+    @endif
+    @if($item['input'] == 'img')
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $(".preview").html("<img src='" + e.target.result + "' width='310' id='image'>");
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#{{$item['name']}}").change(function() {
+        readURL(this);
+        $('.img-responsive').remove();
+    });
+
+    $('.close').on('click', function() {
+        $('#image').remove();
+    });
     @endif
     @endif
 

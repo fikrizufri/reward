@@ -68,6 +68,12 @@ class UsersTableSeeder extends Seeder
         $taskRole->description = 'Manajemen Hak Akses ';
         $taskRole->save();
 
+        $taskCustomer = new Task();
+        $taskCustomer->name = 'Customer';
+        $taskCustomer->slug = Str::slug($taskCustomer->name);
+        $taskCustomer->description = 'Manajemen Pelanggan';
+        $taskCustomer->save();
+
         $taskTransaksi = new Task();
         $taskTransaksi->name = 'Transaksi';
         $taskTransaksi->slug = Str::slug($taskTransaksi->name);
